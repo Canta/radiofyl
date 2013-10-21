@@ -11,29 +11,20 @@
 	
 	session_start();
 	include_once("class/orm.class.php");
-	include_once("class/template.class.php");
 	include_once("class/util/UILib.class.php");
 	
 	if (!isset($_SESSION["app_path"])){
 		$_SESSION["app_path"] = Config::get_field("app_path");
 	}
 	
-	$template = null;
-	
-	if (isset($_REQUEST["template"])){
-		$id_template = (int)$_REQUEST["template"];
-		$template = new Template($id_template);
-	} else {
-		$template = new Template(1);
-	}
-	
-	$_SESSION["template"] = $template;
+	$template = (isset($_REQUEST["template"])) ? isset($_REQUEST["template"]) : null;
+	$template = (is_null($template) && isset($_SESSION["template"])) ? $_SESSION["template"] : "default";
 	
 ?>
 <html>
 <head>
 	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-	<title>Radio CEFyL</title>
+	<title>Radio FyL</title>
 	<?php
 		echo UILib::get_common_js();
 		echo UILib::get_template_js();
@@ -42,7 +33,7 @@
 </head>
 <?php
 	//die(var_dump($template));
-	include "./templates/".$template->get("folder")."/default.php";
+	include "./templates/".$template."/default.php";
 ?>
 </html>
 

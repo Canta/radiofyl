@@ -12,7 +12,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>';
 <config version="1T" xmlns="http://www.draftlight.net/dnex/config/ns/1T/">
 <mp3cast>
   <mount><?=$url?></mount>
-  <title>RadioCEFyL Radio!</title>
+  <title>RadioFyL Radio!</title>
 </mp3cast>
 <init autoplay="1" volume="100" reload="10" xfade="0" />
 </config>

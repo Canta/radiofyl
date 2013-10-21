@@ -7,7 +7,7 @@
 <canvas id="fondo"></canvas>
 <div style="text-align:center; position:relative;">
 	
-	<p id="titulo">Radio CEFyL</p>
+	<p id="titulo">RadioFyL</p>
 	<p>¡Página en construcción!</p><br/>
 
 </div>
@@ -31,7 +31,7 @@
 </div>
 
 <div class="seccion" id="seccion_chat">
-	<iframe src="http://webchat.freenode.net/?channels=radiocefyl" id="chat_frame"></iframe>
+	<iframe src="http://webchat.freenode.net/?channels=radiofyl" id="chat_frame"></iframe>
 </div>
 
 <div id="selector_izquierda" class="selector" onclick="$APP.cambiar_seccion(-1);" ><div>&lt;</div></div>
