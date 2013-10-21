@@ -26,7 +26,7 @@ class Conexion
 	{
 		require("conexion.config");
 		$this->user = (!is_null($user)) ? $user : Conexion::DATABASE_PREFIX.$cconfig["user"];
-		$this->pass = (!is_null($pass)) ? $pass : Conexion::DATABASE_PREFIX.$cconfig["pass"];
+		$this->pass = (!is_null($pass)) ? $pass : $cconfig["pass"];
 		$this->db = (!is_null($db)) ? $db : Conexion::DATABASE_PREFIX.$cconfig["db"];
 		$this->server = (!is_null($server)) ? $server : $cconfig["server"];
 		$this->tipo_base = (!is_null($tipo_base)) ? $tipo_base : $cconfig["tipo_base"];
