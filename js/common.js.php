@@ -1,6 +1,5 @@
 <?php
-	require_once("../class/template.class.php");
-	session_start();
+	@session_start();
 ?>
 
 // Array Remove - By John Resig (MIT Licensed)
@@ -161,5 +160,5 @@ function play_transmision_random($obj){
 
 var $APP = {}; //Variable global para gestión de componentes de aplicación
 $APP.app_path = "<?php echo($_SESSION["app_path"]["field_value"]); ?>";
-$APP.template_path = "<?php echo("templates/".$_SESSION["template"]->get("folder")); ?>";
+$APP.template_path = "<?php echo("templates/".$_SESSION["template"]); ?>";
 $APP.current_player = {};
