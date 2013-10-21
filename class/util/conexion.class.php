@@ -29,7 +29,7 @@ class Conexion
 		$this->pass = (!is_null($pass)) ? $pass : Conexion::DATABASE_PREFIX.$cconfig["pass"];
 		$this->db = (!is_null($db)) ? $db : Conexion::DATABASE_PREFIX.$cconfig["db"];
 		$this->server = (!is_null($server)) ? $server : Conexion::DATABASE_PREFIX.$cconfig["server"];
-		$this->tipo_base = (!is_null($tipo_base)) ? $tipo_base : Conexion::DATABASE_PREFIX.$cconfig["tipo_base"];
+		$this->tipo_base = (!is_null($tipo_base)) ? $tipo_base : $cconfig["tipo_base"];
 		
 		$this->con = ADONewConnection($this->tipo_base);
 		$this->con->Connect($this->server,$this->user, $this->pass, $this->db);
