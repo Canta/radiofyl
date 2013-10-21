@@ -20,6 +20,8 @@
 	$template = (isset($_REQUEST["template"])) ? isset($_REQUEST["template"]) : null;
 	$template = (is_null($template) && isset($_SESSION["template"])) ? $_SESSION["template"] : "default";
 	
+	$_SESSION["template"] = $template;
+	
 ?>
 <html>
 <head>
