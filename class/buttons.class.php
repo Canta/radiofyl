@@ -2,7 +2,7 @@
 require_once ("fields.class.php");
 
 /*
- * 20120523 - Daniel Cantarín - Commsur S.R.L.
+ * 20120523 - Daniel Cantarín 
  * Clase FormButton, para gestionar botones arbitrarios en formularios de ABMs.
  * 
  */

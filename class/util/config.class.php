@@ -1,12 +1,13 @@
 <?php
-/*
- * 20110920 - Daniel Cantarín - Commsur S.R.L.
- * Util class for configuration handling.
- * 
- */
-
 require_once(dirname(__FILE__)."/conexion.class.php");
 
+/**
+ * Config class.
+ * A little class for config access. 
+ * 
+ * @author Daniel Cantarín <omega_canta@yahoo.com>
+ * @date 20110920
+ */
 class Config{
 	
 	public static function get_field($fieldName = ""){

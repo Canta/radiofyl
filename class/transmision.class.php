@@ -1,13 +1,15 @@
 <?php
 
 require_once(dirname(__FILE__)."/orm.class.php");
-require_once(dirname(__FILE__)."/servidorcontroller.class.php");
+require_once(dirname(__FILE__)."/servidor.class.php");
 
 
 class Transmision Extends Model{
 	
 	public function __construct($id = 0){
 		parent::__construct("transmision");
+		$this->datos["restricted_fields"] = array("hash");
+		$this->datos["encrypted_fields"] = array();
 		if (($id !== NULL) && ($id > 0)){
 			$this->load($id);
 		}

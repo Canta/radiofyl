@@ -1,7 +1,7 @@
 <?php
 /*
 
-20120813 - Daniel Cantarín - Commsur S.R.L.
+20120813 - Daniel Cantarín 
 
 extra.class.php
 Este archivo guarda algunas clases pequeñas típicamente utilitarias, que
