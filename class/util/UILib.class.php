@@ -27,7 +27,7 @@ class UIlib {
 		$app_path = $_SESSION["app_path"]["field_value"];
 		$random = mt_rand();
 		
-		$dir = dirname(__FILE__)."/../../templates/".$_SESSION["template"]->get("folder")."/js";
+		$dir = dirname(__FILE__)."/../../templates/".$_SESSION["template"]."/js";
 		
 		$handler = opendir($dir);
 		$files = Array();
@@ -38,7 +38,7 @@ class UIlib {
 		}
 		
 		foreach ($files as $file){
-			$ret .= "<script type=\"text/javascript\" src=\"".$app_path."templates/".$_SESSION["template"]->get("folder")."/js/".$file."?r=".$random."\"></script>\n";
+			$ret .= "<script type=\"text/javascript\" src=\"".$app_path."templates/".$_SESSION["template"]."/js/".$file."?r=".$random."\"></script>\n";
 		}
 		
 		return $ret;
@@ -49,7 +49,7 @@ class UIlib {
 		$app_path = $_SESSION["app_path"]["field_value"];
 		$random = mt_rand();
 		
-		$dir = dirname(__FILE__)."/../../templates/".$_SESSION["template"]->get("folder")."/css";
+		$dir = dirname(__FILE__)."/../../templates/".$_SESSION["template"]."/css";
 		
 		$handler = opendir($dir);
 		$files = Array();
@@ -60,7 +60,7 @@ class UIlib {
 		}
 		
 		foreach ($files as $file){
-			$ret .= "<link rel=\"stylesheet\" href=\"".$app_path."templates/".$_SESSION["template"]->get("folder")."/css/".$file."?r=".$random."\" type=\"text/css\" />";
+			$ret .= "<link rel=\"stylesheet\" href=\"".$app_path."templates/".$_SESSION["template"]."/css/".$file."?r=".$random."\" type=\"text/css\" />";
 		}
 		
 		return $ret;
