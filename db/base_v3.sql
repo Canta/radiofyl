@@ -167,19 +167,19 @@ foreign key (id_grabacion) references grabacion(id)
 on delete cascade;
 
 
-insert into servidor (nombre,descripcion, id_tipo_servidor) values ('Radio CEFyL, canal #1','La radio del CEFyL - Universidad de Buenos Aires',3 );
-insert into props_x_servidor (id_prop, id_servidor, valor) values (1,1,'http://giss.tv:8000/radiocefyl1.ogg');
+insert into servidor (nombre,descripcion, id_tipo_servidor) values ('RadioFyL, canal #1','La radio del forofyl.com.ar',3 );
+insert into props_x_servidor (id_prop, id_servidor, valor) values (1,1,'http://giss.tv:8000/radiofyl.mp3');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (2,1,'source');
-insert into props_x_servidor (id_prop, id_servidor, valor) values (3,1,'qzjsk');
-insert into props_x_servidor (id_prop, id_servidor, valor) values (6,1,'/radiocefyl1.ogg');
+insert into props_x_servidor (id_prop, id_servidor, valor) values (3,1,'rfpq9');
+insert into props_x_servidor (id_prop, id_servidor, valor) values (6,1,'/radiofyl.mp3');
 
-insert into servidor (nombre,descripcion, id_tipo_servidor) values ('Radio CEFyL, canal #2','La radio del CEFyL - Universidad de Buenos Aires',5);
-insert into props_x_servidor (id_prop, id_servidor, valor) values (1,2,'http://184.107.47.33:6122/radiocefyl2.ogg');
+
+insert into servidor (nombre,descripcion, id_tipo_servidor) values ('Radio CEFyL, canal #1','La radio del CEFyL - Universidad de Buenos Aires',3 );
+insert into props_x_servidor (id_prop, id_servidor, valor) values (1,2,'http://giss.tv:8000/radiocefyl1.ogg');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (2,2,'source');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (3,2,'qzjsk');
-insert into props_x_servidor (id_prop, id_servidor, valor) values (4,2,'oskar.svennson@alternativefuse.com');
-insert into props_x_servidor (id_prop, id_servidor, valor) values (5,2,'1246172');
-insert into props_x_servidor (id_prop, id_servidor, valor) values (6,2,'/radiocefyl2.ogg');
+insert into props_x_servidor (id_prop, id_servidor, valor) values (6,2,'/radiocefyl1.ogg');
+
 
 /* Transmisiones estables por defecto */
 insert into transmision(url, inicio, id_formato_stream, nombre, descripcion, estable) values ('http://annuna.dmsp.de:8888/annuna.ogg',now(),2, 'Annuna Tribe Radio','Psychedelic Trance Web Radio', 1);
@@ -345,16 +345,6 @@ create table config(
 	field_name varchar(25) not null,
 	field_value varchar(1000) not null default '') default charset utf8;
 
-drop table if exists template;
-create table template(
-	id int not null auto_increment primary key,
-	name varchar(50) not null,
-	description varchar(255) not null default 'no description',
-	folder varchar(255) not null /* template's folder name */
-);
-
-insert into template (name, description, folder) values ('Default', 'Basic default application''s template', 'default');
-insert into template (name, description, folder) values ('RadioCEFyL', 'Template original de RadioCEFyL', 'radiocefyl');
 insert into config (field_name, field_value) values ('app_path', './');
 insert into config (field_name, field_value) values ('anon_sees_all_transmisions', '1'); 
 insert into config (field_name, field_value) values ('user_sees_all_servers', '1');
