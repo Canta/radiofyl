@@ -1480,7 +1480,7 @@ class Model extends ORM{
 			} else if (is_array($obj)){
 				foreach($obj as $nombre2=>$obj2){
 					if ($obj2 instanceof Model){
-						$obj->datos[$nombre2] = $obj2->filter_data();
+						$obj[$nombre2] = $obj2->filter_data();
 					}
 				}
 			}
