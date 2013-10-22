@@ -27,7 +27,7 @@ class Transmision Extends Model{
 		$r = ClassGetter::get("servidor_x_transmision",Array("id_transmision = ".$this->datos["fields"]["ID"]->get_valor()));
 		
 		foreach ($r as $item){
-			$this->datos["servidores"][] = new ServidorController($item->datos["fields"]["ID_SERVIDOR"]->get_valor());
+			$this->datos["servidores"][] = new Servidor($item->datos["fields"]["ID_SERVIDOR"]->get_valor());
 		}
 		
 	}
