@@ -15,10 +15,11 @@ class Config{
 		
 		if ((trim($fieldName) != "") && ($fieldName !== NULL)){
 			$c = Conexion::get_instance();
-			$return = $c->execute("select * from config where field_name = '$fieldName';");
+			$qs = "select * from config where field_name = '$fieldName';";
+			$return = $c->execute($qs);
 		}
 		
-		return $return[0];
+		return (count($return) > 0) ? $return[0] : "";
 	}
 	
 	public static function set_field($fieldName, $value){
