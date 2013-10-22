@@ -50,7 +50,7 @@ class Conexion
 		return Conexion::$instance;
 	}
 	
-	public function execute($query, $cache = true){
+	public function execute($query, $cache = false){
 		$ret  = Array();
 		$hash = md5(dirname(__FILE__));
 		if ( 
