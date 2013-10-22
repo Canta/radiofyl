@@ -35,7 +35,7 @@ class Servidor Extends Model{
 	}
 	
 	public function load_tipo_servidor(){
-		$this->tipo_servidor = new TipoServidor($this->get("id_tipo_servidor")); 
+		$this->tipo_servidor = new Tipo_Servidor($this->get("id_tipo_servidor")); 
 	}
 	
 	public function load_props(){
