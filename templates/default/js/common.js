@@ -41,7 +41,7 @@ app.ui.UI_load_transmisiones_online = function(){
 			"Transmision #"+$to.datos.fields.ID.data.valor.join();
 		}
 		
-		$tmp = "<div id=\"transmision_online_"+$to.datos.fields.ID.data.valor.join()+"\" onclick=\"play_transmision("+$i+")\">";
+		$tmp = "<div id=\"transmision_online_"+$to.datos.fields.ID.data.valor.join()+"\" onclick=\"app.transmision.play_transmision("+$i+")\">";
 		$tmp += $nombre + "<br/>";
 		$tmp += $to.datos.formato_stream.datos.fields.MIME_TYPE.data.valor.join();
 		$tmp += "</div>"
