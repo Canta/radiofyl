@@ -42,7 +42,7 @@ function AudioPlayerFallback($parms){
 			height:"70px",
 			// these arguments will be passed into the flash document
 			flashvars: {
-				config: "http://"+window.location.hostname+"/"+$APP.app_path+"minicaster/minicasterconfig.php?url="+$parms.url+"&r="+(Math.floor(Math.random() * 9999999)).toString()
+				config: "http://"+window.location.hostname+"/"+app.app_path+"minicaster/minicasterconfig.php?url="+$parms.url+"&r="+(Math.floor(Math.random() * 9999999))
 			}
 		});
 }
@@ -83,82 +83,6 @@ function AudioPlayer($parms){
 	return $a;
 }
 
-function get_transmisiones_online($data){
-	
-	if ($data == undefined){
-		$data = {};
-	}
-	
-	if ($data.on_success == undefined){
-		$data.on_success = function(){};
-	}
-	
-	$.ajax({
-		method: "post",
-		url: $APP.app_path + "aapi/get_transmisiones_online.php",
-		async: false,
-		cache: false,
-		dataType: "json",
-		params: $data,
-		success: function($datos, $status, $xhr){
-			$APP.transmisiones_online = $datos;
-			this.params.on_success();
-		}
-	});
-}
-
-
-function play_transmision($obj){
-	
-	if ($obj == undefined){
-		$obj = {};
-	}
-	if ($obj.indice == undefined){
-		$obj.indice = 0;
-	}
-	if ($obj.on_playing == undefined){
-		$obj.on_playing = function(){};
-	}
-	if($obj.on_stop == undefined){
-		$obj.on_stop = function(){};
-	}
-	
-	
-	$to = $APP.transmisiones_online[$obj.indice];
-	
-	$a = AudioPlayer({
-		url : $to.datos.fields.URL.data.valor.join(),
-		mime_type : $to.datos.formato_stream.datos.fields.MIME_TYPE.data.valor.join(),
-		on_playing: $obj.on_playing,
-		on_stop: $obj.on_stop
-	});
-	
-	$a.indice = $obj.indice;
-	
-	$APP.current_player = $a;
-	
-	return $a;
-}
-
-function play_transmision_random($obj){
-	
-	if ($obj == undefined){
-		$obj = {};
-	}
-	
-	if ($APP.transmisiones_online == undefined){
-		$APP.transmisiones_online = [];
-	}
-	$i = Math.round(Math.random() * $APP.transmisiones_online.length -1);
-	$i = ($i > $APP.transmisiones_online.length -1) ? $APP.transmisiones_online.length -1 : $i;
-	$i = ($i < 0) ? 0 : $i;
-	
-	$obj.indice = $i;
-	
-	return play_transmision($obj);
-}
-
-var $APP = {}; //Variable global para gestión de componentes de aplicación
-$APP.app_path = "<?php echo($_SESSION["app_path"]["field_value"]); ?>";
-$APP.template_path = "<?php echo("templates/".$_SESSION["template"]); ?>";
-$APP.current_player = {};
+app.app_path = "<?php echo($_SESSION["app_path"]["field_value"]); ?>";
+app.template_path = "<?php echo("templates/".$_SESSION["template"]); ?>";
+app.current_player = {};
