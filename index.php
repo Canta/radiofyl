@@ -17,8 +17,9 @@
 		$_SESSION["app_path"] = Config::get_field("app_path");
 	}
 	
-	$template = (isset($_REQUEST["template"])) ? isset($_REQUEST["template"]) : null;
-	$template = (is_null($template) && isset($_SESSION["template"])) ? $_SESSION["template"] : "default";
+	$template = (isset($_REQUEST["template"])) ? $_REQUEST["template"] : null;
+	$template = (is_null($template) && isset($_SESSION["template"])) ? $_SESSION["template"] : $template;
+	$template = (is_null($template)) ? "default" : $template;
 	
 	$_SESSION["template"] = $template;
 	
