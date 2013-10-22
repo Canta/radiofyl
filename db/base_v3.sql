@@ -342,7 +342,7 @@ create table agenda(
 drop table if exists config;
 create table config(
 	id int not null auto_increment primary key,
-	field_name varchar(25) not null,
+	field_name varchar(50) not null,
 	field_value varchar(1000) not null default '') default charset utf8;
 
 insert into config (field_name, field_value) values ('app_path', './');
