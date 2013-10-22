@@ -15,14 +15,16 @@ class get_transmisiones_online extends API{
 		$ret = array();
 		
 		$u = Usuario::get_usuario_activo();
+		$c = Config::get_field("anon_sees_all_transmisions");
+		$c = isset($c["field_value"]) ? $c["field_value"] : "";
 		
-		if ($u->puede("VER_TRANSMISIONES_ONLINE") || Config::get_field("anon_sees_all_transmisions") == '1'){
+		if ($u->puede("UI_VER_TRANSMISIONES") || $c == '1'){
 			$obj_transmision = new Transmision();
 			$transmisiones = $obj_transmision->search(Array("fin = 0"));
 			
 			$ret = "[";
 			foreach ($transmisiones as $t){
-				$ret .= $t->to_json() . ",";
+				$ret .= $t->to_json(false) . ",";
 			}
 			$ret = substr($ret,0,strlen($ret)-1) . "]";
 			
