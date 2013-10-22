@@ -11,7 +11,7 @@ RadioCEFyL_Loading_1.prototype = new Transicion();
 
 function Estrella($data){
 	
-	this.load_image($APP.template_path + "/img/estrella2.svg");
+	this.load_image(app.template_path + "/img/estrella2.svg");
 	this.id = "Estrella" + parseInt(Math.random() * 99999);
 	
 	this.estados = {
@@ -770,7 +770,7 @@ function RadioCEFyL_Escena_1($data){
 	this.event_handlers["on_ready"].push($tmp);
 	
 	get_transmisiones_online(
-		{on_success: function(){window.setTimeout(function(){$APP.escena.ready=true},100);}}
+		{on_success: function(){window.setTimeout(function(){app.escena.ready=true},100);}}
 	);
 	
 	window.setTimeout(function(){
