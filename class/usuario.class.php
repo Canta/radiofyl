@@ -7,10 +7,9 @@ class Usuario Extends Model{
 	
 	const ID_USUARIO_ANONIMO = 1; //id del user anónimo, que se usa de fallback para muchas operaciones.
 	
-	private $permisos;
-	
 	public function __construct($id_usuario = 1){
 		parent::__construct("usuario");
+		$this->datos["permisos"] = Array();
 		$this->datos["encrypted_fields"] = array("password");
 		if (($id_usuario !== NULL) && ($id_usuario > 0)){
 			$this->load($id_usuario);
