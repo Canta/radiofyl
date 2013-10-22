@@ -1470,12 +1470,32 @@ class Model extends ORM{
 			}
 		}
 		
+		unset($tmp->datos["campos"]);
+		unset($tmp->datos["constraints"]);
+		unset($tmp->datos["last_search"]);
+		
+		foreach ($tmp->datos as $nombre=>$obj){
+			if ($obj instanceof Model){
+				$this->datos[$nombre] = $obj->filter_data();
+			} else if (is_array($obj)){
+				foreach($obj as $nombre2=>$obj2){
+					if ($obj2 instanceof Model){
+						$obj->datos[$nombre2] = $obj2->filter_data();
+					}
+				}
+			}
+		}
+		
 		return $tmp;
 	}
 	
-	public function to_json(){
-	   $tmp = $this->filter_data();
-	   return json_encode($tmp->to_array());
+	public function to_json($simple = true){
+		$tmp = $this->filter_data();
+		if ($simple){
+			return json_encode($tmp->to_array());
+		} else {
+			return json_encode($tmp);
+		}
 	}
 	
 	public function to_array(){
