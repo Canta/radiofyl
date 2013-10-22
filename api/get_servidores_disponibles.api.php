@@ -20,11 +20,11 @@ class get_servidores_disponibles extends API{
 		//Quito el método estático porque muchos hostings no tienen PHP 5.3, y entonces no tengo get_caller_class()
 		
 		$stmp = new Servidor(1);
-		$servidores = $stmp->get_offline_by_id_usuario($usuario->get("id"));
+		$servidores = $stmp->get_offline_by_id_usuario($u->get("id"));
 		
 		$ret = "[";
 		foreach ($servidores as $s){
-			$ret .= $s->to_json() . ",";
+			$ret .= $s->to_json(true) . ",";
 		}
 		$ret = substr($ret,0,strlen($ret)-1) . "]";
 		
