@@ -26,12 +26,12 @@ class Servidor Extends Model{
 	public function load($idServidor = 0){
 		parent::load($idServidor);
 		$this->load_tipo_servidor();
-		$this->load_formato_stream(); 
 		$this->load_props();
+		$this->load_formato_stream(); 
 	}
 	
 	public function load_formato_stream(){
-		$this->formato_stream = new Formato_Stream($this->get("id_formato_stream")); 
+		$this->formato_stream = new Formato_Stream($this->get("FORMATO_STREAM")); 
 	}
 	
 	public function load_tipo_servidor(){
@@ -45,7 +45,7 @@ class Servidor Extends Model{
 		foreach ($r as $item){
 			$p = new Propiedad($item["id"]);
 			$this->datos["propiedades"][] = $p;
-			$this->datos["fields"][$p->get("codename")] = new Field("text".$p->get("codename"), $p->get("nombre"), $item["valor"]);
+			$this->datos["fields"][$p->get("codename")] = new Field($p->get("codename"), $p->get("nombre"), $item["valor"]);
 		}
 	}
 	
@@ -200,6 +200,14 @@ class Servidor Extends Model{
 			$return[] = new Servidor((int)$item["id_servidor"]);
 		}
 		return $return;
+	}
+	
+	public function to_json($simple = true){
+		$ret = json_decode(parent::to_json($simple));
+		if ($this->formato_stream instanceof Model){
+			$ret->FORMATO_STREAM = json_decode($this->formato_stream->to_json($simple));
+		}
+		return json_encode($ret);
 	}
 	
 }
