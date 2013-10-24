@@ -52,7 +52,6 @@ insert into formato_stream (nombre, mime_type, codec, tipo) values ('Ogg Audio P
 insert into formato_stream (nombre, mime_type, codec, tipo) values ('Ogg Speex Profile', 'audio/ogg', 'spx', 'audio');
 insert into formato_stream (nombre, mime_type, codec, tipo) values ('FLAC', 'audio/flac', 'flac', 'audio');
 
-
 drop table if exists propiedades;
 create table propiedades(
 	id int not null primary key auto_increment,
@@ -69,7 +68,7 @@ insert into propiedades (codename, nombre, tipo_de_dato, regex, valor_default) v
 insert into propiedades (codename, nombre, tipo_de_dato, regex, valor_default) values ('MAIL_GESTION', 'Mail para gestión', 'string', '^.+@.+$', null);
 insert into propiedades (codename, nombre, tipo_de_dato, regex, valor_default) values ('RADIO_ID', 'Radio ID', 'int', '^[0-9]+$', null);
 insert into propiedades (codename, nombre, tipo_de_dato, regex, valor_default) values ('MOUNT_POINT', 'MountPoint', 'string', '^.+$', null);
-
+insert into propiedades (codename, nombre, tipo_de_dato, regex, valor_default) values ('FORMATO_STREAM', 'Formato de Stream', 'int', '^[0-9]+$', null);
 
 drop table if exists props_x_tipo_servidor;
 create table props_x_tipo_servidor(
@@ -172,14 +171,14 @@ insert into props_x_servidor (id_prop, id_servidor, valor) values (1,1,'http://g
 insert into props_x_servidor (id_prop, id_servidor, valor) values (2,1,'source');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (3,1,'rfpq9');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (6,1,'/radiofyl.mp3');
-
+insert into props_x_servidor (id_prop, id_servidor, valor) values (7,1,1);
 
 insert into servidor (nombre,descripcion, id_tipo_servidor) values ('Radio CEFyL, canal #1','La radio del CEFyL - Universidad de Buenos Aires',3 );
 insert into props_x_servidor (id_prop, id_servidor, valor) values (1,2,'http://giss.tv:8000/radiocefyl1.ogg');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (2,2,'source');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (3,2,'qzjsk');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (6,2,'/radiocefyl1.ogg');
-
+insert into props_x_servidor (id_prop, id_servidor, valor) values (7,2,2);
 
 /* Transmisiones estables por defecto */
 insert into transmision(url, inicio, id_formato_stream, nombre, descripcion, estable) values ('http://annuna.dmsp.de:8888/annuna.ogg',now(),2, 'Annuna Tribe Radio','Psychedelic Trance Web Radio', 1);
