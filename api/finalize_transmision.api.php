@@ -7,7 +7,7 @@ require_once(dirname(__FILE__)."/../class/transmision.class.php");
  *
  * @author Daniel Cantarín <omega_canta@yahoo.com>
  */
-class finalize_transmission extends API{
+class finalize_transmision extends API{
 	
 	public function do_your_stuff($arr){
 		@session_start();
