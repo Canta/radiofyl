@@ -24,11 +24,22 @@ class add_transmision extends API{
 			$abm = new ABM("transmision");
 			$abm->load_fields_from_array($_REQUEST);
 			$abm->save();
+			
+			$tmpok = true;
+			$msgs = $abm->get_mensajes();
+			foreach ($msgs as $msg){
+				if ($msg->isError()){
+					$tmpok = false;
+					echo(var_dump($msg->getMensaje()));
+				}
+			}
+			
+			
 			$c = Conexion::get_instance();
 			$upd = $c->execute("update transmision set fin = 0 where id = ".$abm->get("id"));
 			$t = new Transmision($abm->get("id"));
 			
-			$this->data["response"]->data["message"] = "La transmisión fue registrada."
+			$this->data["response"]->data["message"] = "La transmisión fue registrada.";
 			$this->data["response"]->data["hash"] = $t->get("hash");
 			if (isset($_REQUEST["id_servidor"])){
 				$_REQUEST["id_servidor"] = (is_array($_REQUEST["id_servidor"])) ? $_REQUEST["id_servidor"] : Array($_REQUEST["id_servidor"]);
@@ -37,10 +48,10 @@ class add_transmision extends API{
 				}
 			}
 		} else {
-			APIResponse::fail("Permiso denegado.");
+			return APIResponse::fail("Permiso denegado.");
 		}
 		
-		echo(json_encode($ret));
+		//echo(json_encode($ret));
 		return $this->data["response"];
 	}
 	
