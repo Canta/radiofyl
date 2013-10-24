@@ -26,7 +26,7 @@ class Usuario Extends Model{
 	}
 	
 	public function load_permisos(){
-		$this->permisos = Permiso::get_by_id_usuario($this->get("id"));
+		$this->datos["permisos"] = Permiso::get_by_id_usuario($this->get("id"));
 	}
 	
 	private static function null2empty($value){
@@ -38,7 +38,7 @@ class Usuario Extends Model{
 	public function puede($codigo_permiso){
 		$found = false;
 		foreach ($this->datos["permisos"] as $permiso){
-			if (strtoupper(trim($permiso["codigo"])) == strtoupper(trim($codigo_permiso)) || strtoupper(trim($permiso["codigo"])) == "ROOT_ADMIN"){
+			if (strtoupper(trim($permiso->get("codename"))) == strtoupper(trim($codigo_permiso)) || strtoupper(trim($permiso->get("codename"))) == "ROOT_ADMIN"){
 				$found = true;
 				break;
 			}
