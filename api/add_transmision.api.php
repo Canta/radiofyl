@@ -41,7 +41,7 @@ class add_transmision extends API{
 			
 			$this->data["response"]->data["message"] = "La transmisión fue registrada.";
 			$this->data["response"]->data["hash"] = $t->get("hash");
-			if (isset($_REQUEST["id_servidor"])){
+			if (isset($_REQUEST["id_servidor"]) && (int)$_REQUEST["id_servidor"] > 0){
 				$_REQUEST["id_servidor"] = (is_array($_REQUEST["id_servidor"])) ? $_REQUEST["id_servidor"] : Array($_REQUEST["id_servidor"]);
 				for ($i = 0; $i < count($_REQUEST["id_servidor"]); $i++ ){
 					$ins = $c->execute("insert into servidor_x_transmision (id_servidor, id_transmision) values('".mysql_escape_string($_REQUEST["id_servidor"][$i])."','".$t->get("id")."')");
