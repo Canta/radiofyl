@@ -21,6 +21,15 @@ class add_transmision extends API{
 			$_REQUEST["nombre"] = str_replace("'","&quot;",(isset($_REQUEST["nombre"]) ? $_REQUEST["nombre"] : ""));
 			$_REQUEST["descripcion"] = str_replace("'","&quot;",(isset($_REQUEST["descripcion"]) ? $_REQUEST["descripcion"] : ""));
 			
+			if (isset($_REQUEST["id_formato_stream"]) && !is_numeric($_REQUEST["id_formato_stream"])){
+				//busco el formato por el texto que recibí.
+				$fs = new Model("formato_stream");
+				$is = $fs->search(Array("codec='".$_REQUEST["id_formato_stream"]."'"));
+				if (count($is) > 0){
+					$_REQUEST["id_formato_stream"] = $is[0]->get("id");
+				}
+			}
+			
 			$abm = new ABM("transmision");
 			$abm->load_fields_from_array($_REQUEST);
 			$abm->save();
