@@ -1,8 +1,4 @@
 <?php
-
-require_once("../class/util/conexion.class.php");
-require_once("../class/servidorcontroller.class.php");
-
 if ((!isset($_REQUEST["url"])) || (trim($_REQUEST["url"]) == "") ){
 	die("thou shall not pass!!1!");
 }
