@@ -60,11 +60,17 @@ class add_transmision extends API{
 			return APIResponse::fail("Permiso denegado.");
 		}
 		
-		//echo(json_encode($ret));
+		$nombre = html_entity_decode($_REQUEST["nombre"],ENT_COMPAT,"UTF-8");
+		$descripcion = html_entity_decode($_REQUEST["descripcion"],ENT_COMPAT,"UTF-8");
+		$_REQUEST["status"] = "¡Hay una nueva transmisión online! \"".$nombre."\", ".$descripcion.".\n\nPodés entrar a escuchar en radiofyl.com.ar, y además chatear con otros oyentes y la gente que transmite.\n\nES SIERTO CONPARTE!!!1!.";
+		if (strlen($_REQUEST["status"]) > 420){
+			$_REQUEST["status"] = "¡Hay una nueva transmisión online! Entrá a radiofyl.com.ar para escuchar la transmisión y chatear con los oyentes y la gente que transmite.";
+		}
+		
+		include("fb_bot.php");
 		return $this->data["response"];
 	}
 	
 }
 
 ?>
-
