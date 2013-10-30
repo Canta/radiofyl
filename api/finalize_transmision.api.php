@@ -30,10 +30,13 @@ class finalize_transmision extends API{
 				return APIResponse::fail("No se encontró la transmisión con ese hash.");
 			}
 			$this->data["response"]->data["message"] = "La transmisión fue finalizada con éxito.";
+			
+			$nombre = html_entity_decode($abm->get("nombre"),ENT_COMPAT,"UTF-8");
+			$_REQUEST["status"] = "Te contamos que la transmisión \"".$nombre."\" finalizó. Buscá más tarde la grabación en el espacio de Mixcloud de RadioFyL.";
+			include("fb_bot.php");
 		} else {
 			return APIResponse::fail("Permiso denegado");
 		}
-		
 		
 		return $this->data["response"];
 	}
