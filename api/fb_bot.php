@@ -8,21 +8,25 @@
  * @author Luka Pušić <pusic93@gmail.com>
  * 
  * https://github.com/lukapusic/fb-bot/
+ * 
+ * Modificado por Canta.
  */
 /*
  * Required parameters
  */
-$status = 'Probando status automático. :3';
-$email = '';
-$pass = '';
+$GLOBALS["status"] = $_REQUEST["status"];
+$GLOBALS["email"] = '';
+$GLOBALS["pass"] = '';
 /*
  * Optional parameters
  */
-$uagent = 'Mozilla/4.0 (compatible; MSIE 5.0; S60/3.0 NokiaN73-1/2.0(2.0617.0.0.7) Profile/MIDP-2.0 Configuration/CLDC-1.1)';
-$cookies = 'cookies.txt';
-touch($cookies);
-$device_name = ''; #in case you have location checking turned on
-$debug = false;
+$GLOBALS["uagent"] = 'Mozilla/4.0 (compatible; MSIE 5.0; S60/3.0 NokiaN73-1/2.0(2.0617.0.0.7) Profile/MIDP-2.0 Configuration/CLDC-1.1)';
+$GLOBALS["cookies"] = '/tmp/cookies.txt';
+//echo("antes del touch\n");
+touch($GLOBALS["cookies"]);
+//echo("despues del touch");
+$GLOBALS["device_name"] = ''; #in case you have location checking turned on
+$GLOBALS["debug"] = false;
 
 /*
  * @return form input field names & values
@@ -31,7 +35,13 @@ $debug = false;
 function parse_inputs($html) {
     $dom = new DOMDocument;
     @$dom->loadxml($html);
-    $inputs = $dom->getElementsByTagName('input');
+    $inputs = Array();
+    $forms = Array();
+    @$forms = $dom->getElementsByTagName('form');
+    if ($forms->length > 0){
+	$form = $forms->item(0);
+	@$inputs = $form->getElementsByTagName('input');
+    }
     return($inputs);
 }
 
@@ -41,18 +51,30 @@ function parse_inputs($html) {
 
 function parse_action($html) {
     $dom = new DOMDocument;
-    echo("HTML:\n");
-    echo(var_dump($html));
-    echo("\n\n");
-    @$dom->loadxml($html);
-    echo("DOM:\n");
-    echo(var_dump($dom));
-    echo("\n\n");
-    $form_action = $dom->getElementsByTagName('form')->item(0)->getAttribute('action');
+    $dom->loadxml($html);
+    $form_action = "";
+    $form = $dom->getElementsByTagName('form')->item(0);
+    if ($form){
+	$form_action = $form->getAttribute('action');
+    }
     if (!strpos($form_action, "//")) {
         $form_action = "https://m.facebook.com$form_action";
     }
     return($form_action);
+}
+
+function parse_action_composer($html){
+	$dom = new DOMDocument;
+	@$dom->loadxml($html);
+	$form_action = "https://m.facebook.com";
+	@$forms = $dom->getElementsByTagName("form");
+	foreach ($forms as $form){
+		if ($form->getAttribute("id") == "composer_form"){
+			$form_action .= $form->getAttribute("action");
+		}
+	}
+	
+	return $form_action;
 }
 
 function login() {
@@ -75,7 +97,7 @@ function login() {
                 $post_params .= $input->getAttribute('name') . '=' . urlencode($input->getAttribute('value')) . '&';
         }
     }
-    echo "[i] Using these login parameters: $post_params";
+    //echo "[i] Using these login parameters: $post_params";
     /*
      * Login using previously collected form parameters
      */
@@ -98,11 +120,13 @@ function login() {
     /*
      * Check if location checking is turned on or you have to verify location
      */
+    
     if (strpos($loggedin, "machine_name") || strpos($loggedin, "/checkpoint/") || strpos($loggedin, "submit[Continue]")) {
-        echo "\n[i] Found a checkpoint...\n";
+        //echo "\n[i] Found a checkpoint...\n";
         checkpoint($loggedin);
-        echo "\n[i] Checkpoints passed...\n";
+        //echo "\n[i] Checkpoints passed...\n";
     }
+    
 }
 
 /*
@@ -151,7 +175,7 @@ function checkpoint($html) {
     curl_close($ch);
 
     if (strpos($home, "machine_name") || strpos($home, "/checkpoint/") || strpos($home, "submit[Continue]")) {
-        echo "\n[i] Solving another checkpoint...\n";
+        //echo "\n[i] Solving another checkpoint...\n";
         checkpoint($home);
     }
 }
@@ -161,13 +185,10 @@ function checkpoint($html) {
  */
 
 function grab_home() {
-
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_COOKIEJAR, $GLOBALS['cookies']);
     curl_setopt($ch, CURLOPT_COOKIEFILE, $GLOBALS['cookies']);
     curl_setopt($ch, CURLOPT_USERAGENT, $GLOBALS['uagent']);
-    //curl_setopt($ch, CURLOPT_URL, 'https://m.facebook.com/');
-    //curl_setopt($ch, CURLOPT_URL, 'http://m.facebook.com/login.php?next=http%3A%2F%2Fm.facebook.com%2Fhome.php%3Fm_sess');
     curl_setopt($ch, CURLOPT_URL, 'https://m.facebook.com/');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -177,18 +198,16 @@ function grab_home() {
     if ($GLOBALS['debug']) {
         echo $html;
     }
+    
     curl_close($ch);
     return($html);
 }
 
 function goto_page(){
-	//https://m.facebook.com/profile.php?id=455110231273718&refid=5
-	$ch = curl_init();
+    $ch = curl_init();
     curl_setopt($ch, CURLOPT_COOKIEJAR, $GLOBALS['cookies']);
     curl_setopt($ch, CURLOPT_COOKIEFILE, $GLOBALS['cookies']);
     curl_setopt($ch, CURLOPT_USERAGENT, $GLOBALS['uagent']);
-    //curl_setopt($ch, CURLOPT_URL, 'https://m.facebook.com/');
-    //curl_setopt($ch, CURLOPT_URL, 'http://m.facebook.com/login.php?next=http%3A%2F%2Fm.facebook.com%2Fhome.php%3Fm_sess');
     curl_setopt($ch, CURLOPT_URL, 'https://m.facebook.com/profile.php?id=455110231273718&refid=5');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -210,34 +229,46 @@ function update($status) {
     //$html = grab_home();
     $html = goto_page();
 
+    
     $form_action = parse_action($html);
     $inputs = parse_inputs($html);
-    $post_params = "status=$status&";
+    $post_params = "status=".urlencode($GLOBALS["status"]);
     foreach ($inputs as $input) {
-        $post_params .= $input->getAttribute('name') . '=' . urlencode($input->getAttribute('value')) . '&';
+		$post_params .= "&".$input->getAttribute('name') . '=' . urlencode($input->getAttribute('value'));
     }
 
-
     if ($GLOBALS['debug']) {
-        echo "\nStatus update form action: $form_action\n";
-        echo "\nStatus update params: $post_params\n";
+        echo "\nStatus update form action: $form_action<br/>\n";
+        echo "\nStatus update params: ";
+		echo var_dump($post_params);
+		echo "<br/>\n";
     }
     /*
      * post the update
      */
+    
+    $verbose = fopen('php://temp', 'rw+');
     $ch = curl_init();
+    curl_setopt($ch, CURLOPT_STDERR, $verbose);
     curl_setopt($ch, CURLOPT_COOKIEJAR, $GLOBALS['cookies']);
     curl_setopt($ch, CURLOPT_COOKIEFILE, $GLOBALS['cookies']);
     curl_setopt($ch, CURLOPT_USERAGENT, $GLOBALS['uagent']);
     curl_setopt($ch, CURLOPT_URL, $form_action);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+    curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
+    curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
     $updated = curl_exec($ch);
+    !rewind($verbose);
+    $verboseLog = stream_get_contents($verbose);
+    
     if ($GLOBALS['debug']) {
+		echo(var_dump("<xmp>".$verboseLog."</xmp><br/>\n\n"));
         echo $updated;
     }
     curl_close($ch);
@@ -245,7 +276,7 @@ function update($status) {
 
 function logout() {
     $dom = new DOMDocument;
-    @$dom->loadxml(grab_home());
+    @$dom->loadxml(goto_page());
     $links = $dom->getElementsByTagName('a');
     foreach ($links as $link) {
         if (strpos($link->getAttribute('href'), 'logout.php')) {
@@ -273,11 +304,12 @@ function logout() {
         echo $loggedout;
     }
     curl_close($ch);
-    echo "\n[i] Logged out.\n";
+    //echo "\n[i] Logged out.\n";
 }
 
-login();
-update($GLOBALS['status']);
-logout();
-unlink($cookies);
+$a = login();
+$b = update($GLOBALS['status']);
+$c = logout();
+$d = unlink($GLOBALS["cookies"]);
+
 ?>
