@@ -167,7 +167,7 @@ on delete cascade;
 
 
 insert into servidor (nombre,descripcion, id_tipo_servidor) values ('RadioFyL, canal #1','La radio del forofyl.com.ar',3 );
-insert into props_x_servidor (id_prop, id_servidor, valor) values (1,1,'http://giss.tv:8000/radiofyl.mp3');
+insert into props_x_servidor (id_prop, id_servidor, valor) values (1,1,'http://giss.tv:8001/radiofyl.mp3');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (2,1,'source');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (3,1,'rfpq9');
 insert into props_x_servidor (id_prop, id_servidor, valor) values (6,1,'/radiofyl.mp3');
